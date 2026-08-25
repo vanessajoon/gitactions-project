@@ -8,6 +8,10 @@ on:
   pull_request:
     branches: ["main"]
 
+permissions:
+  contents: read
+
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,6 +36,16 @@ jobs:
         env:
            SOME_SECRET: ${{ secrets.SOME_SECRET }}
         run: python app/calculator.py
+
+      - name: Upload Build Artifact (WAR)
+        uses: actions/upload-artifact@v4
+        with: 
+            name: gitaction:project
+            path: target/*.war
+
+      - name: Notify if build fails
+        if: failure()
+        run: echo "🚨🚨Build job failed! Please check logs"
 
   Testing:
     runs-on: ubuntu-latest
