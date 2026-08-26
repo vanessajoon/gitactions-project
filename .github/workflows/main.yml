@@ -37,11 +37,14 @@ jobs:
            SOME_SECRET: ${{ secrets.SOME_SECRET }}
         run: python app/calculator.py
 
-      - name: Upload Build Artifact (WAR)
+      - name: Package Python application
+        run: zip -r python-app.zip app/ requirements.txt
+
+      - name: Upload Build Artifact (ZIP)
         uses: actions/upload-artifact@v4
         with: 
-            name: gitaction:project
-            path: target/*.war
+            name: gitaction:python-project
+            path: python-app.zip
 
       - name: Notify if build fails
         if: failure()
