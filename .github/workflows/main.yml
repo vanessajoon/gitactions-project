@@ -43,7 +43,7 @@ jobs:
       - name: Upload Build Artifact (ZIP)
         uses: actions/upload-artifact@v4
         with: 
-            name: gitaction:python-project
+            name: gitaction-python-project
             path: python-app.zip
 
       - name: Notify if build fails
